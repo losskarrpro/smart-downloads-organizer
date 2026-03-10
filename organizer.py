@@ -1,5 +1,6 @@
 # Fichier : organizer.py
 # Description : Daemon principal avec watchdog pour surveiller le dossier Downloads en temps réel et classer automatiquement les fichiers.
+# Auteur : Créé par LUMENA
 # Contenu : Utilise watchdog pour détecter les changements, utilise les modules du projet pour classifier et déplacer les fichiers.
 #           Inclut la journalisation, la gestion de configuration et le démarrage du daemon.
 
@@ -103,55 +104,45 @@ class OrganizerDaemon:
     """Daemon principal pour organiser les téléchargements."""
 
     def __init__(self, config_path=None):
-        if config_path is None:
-            config_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'config.json')
         self.config = get_config(config_path)
         self.stats = Stats()
         self.observer = Observer()
         self.stop_event = Event()
-        self.handler = DownloadHandler(self.config, self.stats)
 
-    def run(self):
-        """Lance le daemon."""
-        logger.info("Starting Smart Downloads Organizer Daemon")
-        downloads_path = Path(self.config['downloads_folder'])
-        if not downloads_path.exists():
-            logger.error(f"Downloads folder does not exist: {downloads_folder}")
-            sys.exit(1)
-
-        # Planifier l'observation du dossier Downloads
-        self.observer.schedule(self.handler, str(downloads_path), recursive=False)
-        self.observer.start()
-
-        logger.info(f"Monitoring {downloads_path} for changes...")
-
-        # Gestion des signaux pour un arrêt propre
+        # Configurer les signaux d'arrêt
         signal(SIGINT, self.signal_handler)
         signal(SIGTERM, self.signal_handler)
+
+    def signal_handler(self, signum, frame):
+        """Gère les signaux d'arrêt (Ctrl+C, kill)."""
+        logger.info(f"Signal {signum} received, shutting down...")
+        self.stop_event.set()
+
+    def run(self):
+        """Lance le daemon de surveillance."""
+        downloads_folder = Path(self.config['downloads_folder'])
+        if not downloads_folder.exists():
+            logger.error(f"Downloads folder {downloads_folder} does not exist!")
+            sys.exit(1)
+
+        logger.info(f"Starting organizer daemon for {downloads_folder}")
+        logger.info(f"Organization root: {self.config['organize_root']}")
+
+        # Créer le handler
+        handler = DownloadHandler(self.config, self.stats)
+        self.observer.schedule(handler, str(downloads_folder), recursive=False)
+        self.observer.start()
 
         try:
             while not self.stop_event.is_set():
                 time.sleep(1)
         except KeyboardInterrupt:
-            pass
+            logger.info("Keyboard interrupt received")
         finally:
-            self.shutdown()
+            self.observer.stop()
+            self.observer.join()
+            logger.info("Organizer daemon stopped")
 
-    def signal_handler(self, signum, frame):
-        """Gère les signaux d'arrêt."""
-        logger.info(f"Received signal {signum}, shutting down...")
-        self.stop_event.set()
-
-    def shutdown(self):
-        """Arrête le daemon proprement."""
-        self.observer.stop()
-        self.observer.join()
-        logger.info("Daemon stopped.")
-
-def main():
-    """Point d'entrée principal."""
+if __name__ == "__main__":
     daemon = OrganizerDaemon()
     daemon.run()
-
-if __name__ == '__main__':
-    main()
