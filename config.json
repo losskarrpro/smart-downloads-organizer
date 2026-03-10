@@ -1,0 +1,45 @@
+{
+  "watch_folder": "~/Downloads",
+  "destination_base": "~/Downloads/Organized",
+  "log_file": "logs/organizer.log",
+  "categories": {
+    "Images": {
+      "extensions": ["jpg", "jpeg", "png", "gif", "bmp", "tiff", "webp", "svg", "ico", "heic", "heif"],
+      "destination": "Images"
+    },
+    "Videos": {
+      "extensions": ["mp4", "mkv", "avi", "mov", "wmv", "flv", "webm", "m4v", "mpg", "mpeg", "3gp", "ogv", "ts", "m2ts"],
+      "destination": "Videos"
+    },
+    "Documents": {
+      "extensions": ["pdf", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "txt", "rtf", "odt", "ods", "odp", "epub", "mobi", "csv", "tex", "pages", "numbers", "key"],
+      "destination": "Documents"
+    },
+    "Archives": {
+      "extensions": ["zip", "rar", "7z", "tar", "gz", "bz2", "xz", "tgz", "z", "lz", "lzma", "lzo", "sz", "dz", "rz", "zst", "tz", "tzst", "cpio", "iso", "jar", "war", "ear", "sar"],
+      "destination": "Archives"
+    },
+    "Code": {
+      "extensions": ["py", "js", "html", "css", "java", "c", "cpp", "cs", "php", "rb", "json", "xml", "yml", "yaml", "sh", "sql", "ts", "jsx", "tsx", "vue", "go", "rs", "swift", "kt", "scala", "pl", "r", "m", "h", "hpp", "cc", "mm", "dart", "lua", "asm", "s", "clj", "edn", "ex", "exs", "elm", "fs", "fsx", "v", "vhd", "sv", "svh", "tcl", "tk", "perl"],
+      "destination": "Code"
+    },
+    "Musique": {
+      "extensions": ["mp3", "wav", "flac", "aac", "ogg", "wma", "m4a", "opus", "aiff", "alac", "mid", "midi", "amr", "ac3", "dts", "ra", "rm", "vox"],
+      "destination": "Musique"
+    },
+    "Installeurs": {
+      "extensions": ["exe", "msi", "dmg", "pkg", "deb", "rpm", "apk", "bat", "sh", "run", "bin", "appimage", "msix", "appx", "ipa", "xap", "cab", "msp", "mst", "prm", "air", "crx", "nex"],
+      "destination": "Installeurs"
+    }
+  },
+  "other_settings": {
+    "move_files": true,
+    "min_file_age_seconds": 2,
+    "exclude_folders": [".git", "node_modules", "__pycache__", ".idea", ".vscode", "Organized"],
+    "web_interface": {
+      "host": "localhost",
+      "port": 5000,
+      "debug": false
+    }
+  }
+}
