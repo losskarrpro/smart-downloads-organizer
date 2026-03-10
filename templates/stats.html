@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Downloads Organizer - Statistics</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Smart Downloads Organizer</h1>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('index') }}">Dashboard</a></li>
+                <li><a href="{{ url_for('history') }}">History</a></li>
+                <li><a href="{{ url_for('stats') }}" class="active">Statistics</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="stats-summary">
+            <h2>Organizer Statistics</h2>
+            <div class="summary-cards">
+                <div class="card">
+                    <h3>Total Files</h3>
+                    <p id="total-files">{{ stats.total_files }}</p>
+                </div>
+                <div class="card">
+                    <h3>Last Organized</h3>
+                    <p id="last-organized">{{ stats.last_organized }}</p>
+                </div>
+                <div class="card">
+                    <h3>Success Rate</h3>
+                    <p id="success-rate">{{ stats.success_rate }}%</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="charts-section">
+            <div class="chart-container">
+                <h3>Files by Category</h3>
+                <canvas id="categoryChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <h3>Daily Activity (Last 7 Days)</h3>
+                <canvas id="activityChart"></canvas>
+            </div>
+        </section>
+
+        <section class="detailed-stats">
+            <h3>Category Breakdown</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Files</th>
+                        <th>Size</th>
+                        <th>Last Updated</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for category, data in stats.categories.items() %}
+                    <tr>
+                        <td>{{ category }}</td>
+                        <td>{{ data.count }}</td>
+                        <td>{{ data.size }}</td>
+                        <td>{{ data.last_updated }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <footer>
+        <p>Smart Downloads Organizer &copy; 2023</p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/charts.js') }}"></script>
+    <script>
+        const categoryData = {{ stats.category_data|tojson }};
+        const activityData = {{ stats.activity_data|tojson }};
+        initializeStatsCharts(categoryData, activityData);
+    </script>
+</body>
+</html>
