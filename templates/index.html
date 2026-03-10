@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Downloads Organizer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1><i class="fas fa-folder-tree"></i> Smart Downloads Organizer</h1>
+            <p class="subtitle">Real-time file organization daemon</p>
+        </header>
+
+        <div class="dashboard">
+            <div class="stats-overview">
+                <div class="stat-card">
+                    <h3><i class="fas fa-chart-line"></i> Total Files Organized</h3>
+                    <p class="stat-number">{{ total_files }}</p>
+                    <p class="stat-desc">Since daemon started</p>
+                </div>
+                <div class="stat-card">
+                    <h3><i class="fas fa-hdd"></i> Space Saved</h3>
+                    <p class="stat-number">{{ space_saved }}</p>
+                    <p class="stat-desc">Through organization</p>
+                </div>
+                <div class="stat-card">
+                    <h3><i class="fas fa-clock"></i> Last Activity</h3>
+                    <p class="stat-number">{{ last_activity_time }}</p>
+                    <p class="stat-desc">{{ last_activity_file }}</p>
+                </div>
+                <div class="stat-card">
+                    <h3><i class="fas fa-cogs"></i> Status</h3>
+                    <p class="stat-number status-{{ status_class }}">{{ status }}</p>
+                    <p class="stat-desc">Daemon is {{ status.lower() }}</p>
+                </div>
+            </div>
+
+            <div class="main-content">
+                <div class="chart-container">
+                    <h2><i class="fas fa-chart-pie"></i> Files by Category</h2>
+                    <div class="chart-wrapper">
+                        <canvas id="categoryChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="two-column">
+                    <div class="recent-activity">
+                        <h2><i class="fas fa-history"></i> Recent Activity</h2>
+                        <div class="activity-list">
+                            {% for activity in recent_activities %}
+                            <div class="activity-item">
+                                <div class="activity-icon">
+                                    <i class="fas fa-{{ activity.icon }}"></i>
+                                </div>
+                                <div class="activity-details">
+                                    <p class="activity-file">{{ activity.filename }}</p>
+                                    <p class="activity-meta">
+                                        <span class="activity-time">{{ activity.time }}</span>
+                                        <span class="activity-category">{{ activity.category }}</span>
+                                    </p>
+                                </div>
+                                <div class="activity-action">
+                                    <i class="fas fa-arrow-right"></i>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <a href="/history" class="view-all-btn">
+                            <i class="fas fa-list"></i> View Full History
+                        </a>
+                    </div>
+
+                    <div class="category-breakdown">
+                        <h2><i class="fas fa-folder-open"></i> Category Breakdown</h2>
+                        <div class="category-list">
+                            {% for category in categories %}
+                            <div class="category-item">
+                                <div class="category-header">
+                                    <i class="fas fa-{{ category.icon }}"></i>
+                                    <h3>{{ category.name }}</h3>
+                                    <span class="file-count">{{ category.count }} files</span>
+                                </div>
+                                <div class="category-stats">
+                                    <p>{{ category.size }}</p>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: {{ category.percentage }}%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <p>Smart Downloads Organizer &copy; {{ current_year }} | 
+                <a href="/api/stats" class="api-link"><i class="fas fa-code"></i> API</a> | 
+                <a href="/config" class="config-link"><i class="fas fa-cog"></i> Configuration</a>
+            </p>
+            <p class="daemon-info">
+                <i class="fas fa-server"></i> Watching: <strong>{{ watch_path }}</strong> |
+                <i class="fas fa-database"></i> Logs: {{ log_entries }} entries
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        const categoryData = {{ category_data|tojson }};
+        
+        const ctx = document.getElementById('categoryChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: categoryData.labels,
+                datasets: [{
+                    data: categoryData.values,
+                    backgroundColor: [
+                        '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0',
+                        '#9966FF', '#FF9F40', '#C9CBCF'
+                    ],
+                    borderWidth: 2,
+                    borderColor: '#fff'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'right',
+                        labels: {
+                            padding: 20,
+                            usePointStyle: true,
+                            pointStyle: 'circle'
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                const label = context.label || '';
+                                const value = context.raw || 0;
+                                const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                const percentage = Math.round((value / total) * 100);
+                                return `${label}: ${value} files (${percentage}%)`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        setTimeout(function() {
+            location.reload();
+        }, 30000);
+    </script>
+</body>
+</html>
