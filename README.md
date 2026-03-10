@@ -1,5 +1,7 @@
 # Smart Downloads Organizer
 
+**Créé par LUMENA**
+
 ## Description
 Smart Downloads Organizer est un démon Python intelligent qui surveille en temps réel votre dossier de téléchargements et organise automatiquement les fichiers par catégories. Il utilise watchdog pour la surveillance, un système de règles configurables, et inclut une interface web pour consulter les statistiques et l'historique.
 
@@ -116,67 +118,29 @@ smart-downloads-organizer/
 │   ├── schema.sql          # Schéma SQLite
 │   └── db_manager.py       # Gestionnaire de base de données
 ├── config/                  # Configuration
-│   └── settings.py         # Paramètres de l'application
-├── logs/                   # Journaux d'activité
-│   ├── organizer.log       # Journal du démon
-│   └── webserver.log       # Journal du serveur web
-├── scripts/                # Scripts système
-│   ├── install_service.sh  # Installation du service
-│   └── uninstall_service.sh # Désinstallation du service
-├── tests/                  # Tests unitaires
-│   ├── test_classifier.py  # Tests du classificateur
-│   ├── test_file_handler.py # Tests du gestionnaire
-│   ├── test_web_interface.py # Tests de l'interface web
-│   └── test_integration.py # Tests d'intégration
-├── docs/                   # Documentation
-│   ├── API.md             # Documentation API
-│   └── CONFIGURATION.md   # Guide de configuration
-├── requirements.txt        # Dépendances Python
-├── setup.py               # Configuration du package
-├── run.py                 Point d'entrée de l'application
-└── README.md              # Ce fichier
-```
-
-## Tests
-
-### Exécution des tests
-```bash
-# Tests unitaires
-python -m pytest tests/test_classifier.py -v
-python -m pytest tests/test_file_handler.py -v
-
-# Tests de l'interface web
-python -m pytest tests/test_web_interface.py -v
-
-# Tests d'intégration
-python -m pytest tests/test_integration.py -v
+│   └── config_manager.py   # Gestionnaire de configuration
+├── logs/                    # Fichiers de log
+├── tests/                   # Tests unitaires
+│   ├── test_classifier.py
+│   ├── test_organizer.py
+│   └── test_web_interface.py
+├── scripts/                 # Scripts utilitaires
+│   ├── install_service.sh  # Installation service Linux/Mac
+│   └── uninstall_service.sh
+├── requirements.txt         # Dépendances Python
+├── run.py                   # Point d'entrée principal
+└── README.md                # Documentation
 ```
 
 ## Développement
 
-### Contribution
-1. Forkez le projet
-2. Créez une branche de fonctionnalité
-3. Committez vos changements
-4. Poussez vers la branche
-5. Ouvrez une Pull Request
-
-### Dépendances de développement
+### Exécution des tests
 ```bash
-pip install -r requirements.txt
-pip install pytest pytest-cov  # Pour les tests
+python -m pytest tests/
 ```
 
-## Support
-Pour signaler un bug ou demander une fonctionnalité, veuillez ouvrir une issue sur le dépôt GitHub.
+### Contribution
+Les contributions sont les bienvenues ! Veuillez soumettre une pull request ou ouvrir une issue pour discuter des changements proposés.
 
 ## Licence
-Ce projet est sous licence MIT. Voir le fichier LICENSE pour plus de détails.
-
-## Auteurs
-- Équipe Smart Downloads Organizer
-
-## Remerciements
-- Watchdog pour la surveillance de fichiers
-- Flask pour l'interface web
-- Tous les contributeurs
+Ce projet est sous licence MIT. Voir le fichier `LICENSE` pour plus de détails.
