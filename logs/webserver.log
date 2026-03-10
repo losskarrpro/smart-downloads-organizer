@@ -1,0 +1,25 @@
+2024-12-01 15:30:45,678 - INFO - Web server starting on http://localhost:5000
+2024-12-01 15:30:45,679 - INFO - Flask application initialized
+2024-12-01 15:30:45,680 - INFO - Loading configuration from config.json
+2024-12-01 15:30:45,682 - INFO - Connected to database at database/organizer.db
+2024-12-01 15:30:45,684 - INFO - Serving static files from static/
+2024-12-01 15:30:45,685 - INFO - Template folder set to templates/
+2024-12-01 15:31:02,123 - INFO - 127.0.0.1 - - "GET / HTTP/1.1" 200 -
+2024-12-01 15:31:02,456 - INFO - 127.0.0.1 - - "GET /static/css/style.css HTTP/1.1" 200 -
+2024-12-01 15:31:02,789 - INFO - 127.0.0.1 - - "GET /static/js/charts.js HTTP/1.1" 200 -
+2024-12-01 15:31:03,112 - INFO - 127.0.0.1 - - "GET /api/stats HTTP/1.1" 200 -
+2024-12-01 15:31:15,234 - INFO - 127.0.0.1 - - "GET /history HTTP/1.1" 200 -
+2024-12-01 15:31:15,567 - INFO - 127.0.0.1 - - "GET /api/history?limit=50 HTTP/1.1" 200 -
+2024-12-01 15:32:45,001 - INFO - 127.0.0.1 - - "GET / HTTP/1.1" 200 -
+2024-12-01 15:32:45,334 - INFO - 127.0.0.1 - - "GET /api/stats HTTP/1.1" 200 -
+2024-12-01 15:33:10,555 - WARNING - 127.0.0.1 - - "GET /nonexistent HTTP/1.1" 404 -
+2024-12-01 15:34:22,888 - INFO - Web server shutting down
+2024-12-01 16:05:30,999 - INFO - Web server starting on http://localhost:5000
+2024-12-01 16:05:31,001 - INFO - Flask application initialized
+2024-12-01 16:05:31,003 - INFO - Loading configuration from config.json
+2024-12-01 16:05:31,005 - INFO - Connected to database at database/organizer.db
+2024-12-01 16:05:45,111 - INFO - 127.0.0.1 - - "GET / HTTP/1.1" 200 -
+2024-12-01 16:05:45,444 - INFO - 127.0.0.1 - - "GET /api/stats HTTP/1.1" 200 -
+2024-12-01 16:06:30,222 - INFO - 127.0.0.1 - - "GET /history HTTP/1.1" 200 -
+2024-12-01 16:06:30,555 - INFO - 127.0.0.1 - - "GET /api/history?limit=100 HTTP/1.1" 200 -
+2024-12-01 16:07:15,777 - INFO - Web server shutting down
