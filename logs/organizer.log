@@ -1,0 +1,13 @@
+[2023-10-05 08:15:23] [INFO] Smart Downloads Organizer démarré. Surveillance du dossier : /home/user/Downloads
+[2023-10-05 08:15:23] [INFO] Configuration chargée depuis config.json
+[2023-10-05 08:15:23] [INFO] Interface web démarrée sur http://localhost:8080
+[2023-10-05 08:20:17] [INFO] Fichier détecté : 'vacation_photo.jpg' (Image) déplacé vers : /home/user/Downloads/Images/vacation_photo.jpg
+[2023-10-05 08:22:45] [INFO] Fichier détecté : 'report_q3.pdf' (Document) déplacé vers : /home/user/Downloads/Documents/report_q3.pdf
+[2023-10-05 08:25:11] [INFO] Fichier détecté : 'project_backup.zip' (Archive) déplacé vers : /home/user/Downloads/Archives/project_backup.zip
+[2023-10-05 08:30:09] [INFO] Fichier détecté : 'setup.exe' (Installeur) déplacé vers : /home/user/Downloads/Installeurs/setup.exe
+[2023-10-05 08:35:42] [WARNING] Le fichier 'unknown.xyz' ne correspond à aucune catégorie. Il n'a pas été déplacé.
+[2023-10-05 08:40:55] [INFO] Fichier détecté : 'song.mp3' (Musique) déplacé vers : /home/user/Downloads/Musique/song.mp3
+[2023-10-05 08:45:33] [INFO] Fichier détecté : 'tutorial.mp4' (Vidéo) déplacé vers : /home/user/Downloads/Videos/tutorial.mp4
+[2023-10-05 08:50:18] [INFO] Fichier détecté : 'script.py' (Code) déplacé vers : /home/user/Downloads/Code/script.py
+[2023-10-05 08:55:27] [ERROR] Erreur lors du déplacement du fichier 'corrupt_file.zip' : [Errno 13] Permission denied
+[2023-10-05 09:00:15] [INFO] Statistiques mises à jour : 7 fichiers déplacés, 1 erreur, 1 fichier ignoré
